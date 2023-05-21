@@ -1,11 +1,24 @@
 import React, { useEffect, useState } from "react";
 import axios from "../../axios";
 
+enum Sex {
+  Male = "Male",
+  Female = "Female",
+}
+
 type User = {
   id: number;
   name: string;
   citizenshipNumber: string;
   email: string;
+  first_name: string;
+  last_name: string;
+  sex: Sex;
+  address: string;
+  valid_id_type: string;
+  // valid_id_pic: string;
+  birthday: Date;
+  age: number;
 };
 
 const Users = () => {
@@ -39,13 +52,15 @@ const Users = () => {
   };
 
   const removeUserFromList = (id: number | string) => {
-    const index = users.findIndex((user) => user.id == id);
+    const index = users.findIndex((user) => user.id === id);
     const newList = [...users];
     newList.splice(index, 1);
     setUser(newList);
   };
 
-  if (users.length === 0) return <div></div>;
+  if (users.length === 0) return <div>
+    No users to verify.
+  </div>;
 
   return (
     <div className="users-wrapper">

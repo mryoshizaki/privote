@@ -21,6 +21,7 @@ const Verify = () => {
 
   return (
     <div>
+      
       <button onClick={verifyUser} className="button-primary">
         verify {name}
       </button>
