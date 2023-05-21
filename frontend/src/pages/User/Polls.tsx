@@ -60,7 +60,7 @@ const User = () => {
         <Chart
           enableVote={votable === "not-voted"}
           userId={authContext.id}
-          userName={authContext.name}
+          userName={authContext.last_name}
           votes={data.votes}
         />
       </>

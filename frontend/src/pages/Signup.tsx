@@ -6,9 +6,14 @@ import * as Yup from "yup";
 import axios from "../axios";
 
 const schema = Yup.object().shape({
-  name: Yup.string().min(3).required(),
+  first_name: Yup.string().min(2).required(),
+    last_name: Yup.string().min(2).required(),
+    sex: Yup.string().oneOf(["Male", "Female"]).required(),
+    address: Yup.string().required(),
+    valid_id_type: Yup.string().required(),
+    birthday: Yup.date().required(),
+    age: Yup.number().min(18).required(),
   email: Yup.string().email("Invalid email").required("Required"),
-  citizenshipNumber: Yup.string().min(4).required(),
   password: Yup.string().min(3).required("Required"),
   confirm: Yup.string()
     .oneOf([Yup.ref("password")], "must be same as password")
@@ -29,17 +34,15 @@ const Signup = (): JSX.Element => {
             initialValues={{
               name: "",
               email: "",
-              citizenshipNumber: "",
               password: "",
               confirm: "",
             }}
             validationSchema={schema}
-            onSubmit={({ name, email, citizenshipNumber, password }) => {
+            onSubmit={({ name, email, password }) => {
               axios
                 .post("/auth/signup", {
                   name,
                   email,
-                  citizenshipNumber,
                   password,
                 })
                 .then((res) => {
@@ -65,20 +68,6 @@ const Signup = (): JSX.Element => {
                   />
                   <div className="form-error-text">
                     {touched.name && errors.name ? errors.name : null}
-                  </div>
-                </div>
-
-                <div className="input-container">
-                  <input
-                    id="citizenshipNumber"
-                    type="text"
-                    placeholder="Citizenship Number"
-                    {...getFieldProps("citizenshipNumber")}
-                  />
-                  <div className="form-error-text">
-                    {touched.citizenshipNumber && errors.citizenshipNumber
-                      ? errors.citizenshipNumber
-                      : null}
                   </div>
                 </div>
 

@@ -28,10 +28,16 @@ export default async (req: Request, res: Response) => {
 
     const userPlainObj = {
       id: user.id,
-      name: user.name,
-      phone: user.phone,
+      first_name: user.first_name,
+      last_name: user.last_name,
       email: user.email,
       admin: user.admin,
+      sex: user.sex,
+      address: user.address,
+      valid_id_type: user.valid_id_type,
+      // valid_id_pic: string;
+      birthday: user.birthday,
+      age: user.age
     };
 
     const accessToken = jwt.sign(userPlainObj, accessTokenSecret, {

@@ -2,19 +2,38 @@ import React, { createContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import axios from "../axios";
 
+enum Sex {
+  Male = "Male",
+  Female = "Female",
+}
+
 type ContextProps = {
   children: JSX.Element;
 };
 
 type User = {
   id: number;
-  name: string;
+  email: string;
+  first_name: string;
+  last_name: string;
   admin: boolean;
+  sex: Sex;
+  address: string;
+  valid_id_type: string;
+  // valid_id_pic: string;
+  birthday: Date;
+  age: number;
 };
 
 export const AuthContext = createContext({
   id: 0,
-  name: "",
+  first_name: "",
+  last_name: "",
+  email: "",
+  sex: "",
+  birthday: new Date(),
+  age: 0,
+  address: "",
   isAdmin: false,
   authenticated: false,
   accessToken: "",
@@ -28,7 +47,13 @@ export default (props: ContextProps): JSX.Element => {
 
   const [authentication, setAuthentication] = useState({
     id: 0,
-    name: "",
+    first_name: "",
+    last_name: "",
+    email: "",
+    sex: "",
+    birthday: new Date(),
+    age: 0,
+    address: "",
     isAdmin: false,
     authenticated: false,
     accessToken: "",
@@ -60,7 +85,13 @@ export default (props: ContextProps): JSX.Element => {
   ) => {
     setAuthentication({
       id: user.id,
-      name: user.name,
+      first_name: user.first_name,
+      last_name: user.last_name,
+      email: user.email,
+      sex: user.sex,
+      address: user.address,
+      birthday: user.birthday,
+      age: user.age,
       isAdmin: user.admin,
       authenticated: true,
       accessToken: token,
@@ -75,7 +106,13 @@ export default (props: ContextProps): JSX.Element => {
 
     setAuthentication({
       id: 0,
-      name: "",
+      first_name: "",
+      last_name: "",
+      email: "",
+      sex: "",
+      birthday: new Date(),
+      age: 0,
+      address: "",
       isAdmin: false,
       authenticated: false,
       accessToken: "",
@@ -89,7 +126,13 @@ export default (props: ContextProps): JSX.Element => {
     <AuthContext.Provider
       value={{
         id: authentication.id,
-        name: authentication.name,
+        first_name: authentication.first_name,
+        last_name: authentication.last_name,
+        email: authentication.email,
+        sex: authentication.sex,
+        birthday: authentication.birthday,
+        age: authentication.age,
+        address: authentication.address,
         isAdmin: authentication.isAdmin,
         authenticated: authentication.authenticated,
         accessToken: authentication.accessToken,

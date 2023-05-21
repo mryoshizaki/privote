@@ -13,7 +13,7 @@ const Profile = (props: RouteProps) => {
         <div className="person-icon">
           <i className="bi bi-person-circle"></i>
         </div>
-        <div className="text-normal username">{authContext.name}</div>
+        <div className="text-normal username">{authContext.first_name} {authContext.last_name}</div>
         <button onClick={authContext.logout} className="button-primary">
           Logout
         </button>
@@ -22,10 +22,11 @@ const Profile = (props: RouteProps) => {
       <div className="right-panel">
         <span className="title-small">Profile</span>
 
-        <div className="skeleton"></div>
-        <div className="skeleton"></div>
-        <div className="skeleton"></div>
-        <div className="skeleton"></div>
+        <div className="skeleton">Email: {authContext.email}</div>
+        <div className="skeleton">Sex: {authContext.sex}</div>
+        <div className="skeleton">Birthday: {authContext.birthday}</div>
+        <div className="skeleton">Age: {authContext.age}</div>
+        <div className="skeleton">Address: {authContext.address}</div>
       </div>
     </div>
   );

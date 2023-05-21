@@ -5,10 +5,15 @@ import bcrypt from "bcrypt";
 
 const schema = yup.object({
   body: yup.object({
-    name: yup.string().min(3).required(),
     email: yup.string().email().required(),
     password: yup.string().min(3).required(),
-    citizenshipNumber: yup.string().min(4),
+    first_name: yup.string().min(2).required(),
+    last_name: yup.string().min(2).required(),
+    sex: yup.string().oneOf(["Male", "Female"]).required(),
+    address: yup.string().required(),
+    valid_id_type: yup.string().required(),
+    birthday: yup.date().required(),
+    age: yup.number().min(18).required(),
   }),
 });
 
@@ -30,10 +35,15 @@ export default async (req: Request, res: Response) => {
   const newUser = new User();
 
   newUser.admin = false;
-  newUser.name = req.body.name;
+  newUser.first_name = req.body.first_name;
+  newUser.last_name = req.body.last_name;
   newUser.email = req.body.email;
   newUser.password = hashedPassword;
-  newUser.citizenshipNumber = req.body.citizenshipNumber;
+  newUser.sex = req.body.sex;
+  newUser.address = req.body.address;
+  newUser.valid_id_type = req.body.valid_id_type;
+  newUser.birthday = req.body.birthday;
+  newUser.age = req.body.age;
 
   try {
     await User.save(newUser);

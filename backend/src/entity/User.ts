@@ -10,11 +10,8 @@ export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: number;
 
-  @Column({ length: 100 })
-  name!: string;
-
-  @Column({ unique: true })
-  citizenshipNumber!: string;
+  // @Column({ length: 100 })
+  // name!: string;
 
   @Column({ length: 180, unique: true })
   email!: string;
