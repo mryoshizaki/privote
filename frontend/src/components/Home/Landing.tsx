@@ -6,12 +6,12 @@ const Landing = () => {
     <div className="landing">
       <div className="left">
         <div className="logo">
-          <img src="logo.png" />
+          <img src="logo.jpg" />
         </div>
 
-        <div className="title-large">Blockchain Based</div>
-        <div className="title-large">Voting System</div>
-        <div className="title-small">the future of voting</div>
+        <div className="title-large">Privote:</div>
+        <div className="title-large">An Ethereum-based Internet Voting System</div>
+        <div className="title-small">for Barangay SK Elections</div>
 
         <div className="button-wrapper">
           <Link to="/login">
@@ -25,7 +25,7 @@ const Landing = () => {
       </div>
 
       <div className="right">
-        <img src="vote.gif" />
+        <img src="privote.png" />
       </div>
     </div>
   );
