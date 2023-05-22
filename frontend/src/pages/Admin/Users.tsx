@@ -14,7 +14,7 @@ type User = {
   sex: Sex;
   address: string;
   valid_id_type: string;
-  // valid_id_pic: string;
+  valid_id_pic: string;
   birthday: Date;
   age: number;
 };
@@ -77,6 +77,8 @@ const Users = () => {
           Address: {user.address}
           <br/>
           Valid ID Type: {user.valid_id_type}
+          <br/>
+          Valid ID: {user.valid_id_pic}
           <div>
             <button
               onClick={() => verifyUser(user.id)}

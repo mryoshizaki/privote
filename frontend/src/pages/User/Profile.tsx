@@ -27,7 +27,9 @@ const Profile = (props: RouteProps) => {
         <div className="skeleton">Birthday: {authContext.birthday}</div>
         <div className="skeleton">Age: {authContext.age}</div>
         <div className="skeleton">Address: {authContext.address}</div>
-        <div className="skeleton">Address: {authContext.valid_id_type}</div>
+        <div className="skeleton">Valid ID Type: {authContext.valid_id_type}</div>
+        <div className="skeleton">Valid ID:</div>
+        <div><img src={authContext.valid_id_pic} /></div>
       </div>
     </div>
   );

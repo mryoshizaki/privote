@@ -20,7 +20,7 @@ type User = {
   sex: Sex;
   address: string;
   valid_id_type: string;
-  // valid_id_pic: string;
+  valid_id_pic: string;
   birthday: Date;
   age: number;
 };
@@ -35,6 +35,7 @@ export const AuthContext = createContext({
   age: 0,
   address: "",
   valid_id_type: "",
+  valid_id_pic: "",
   isAdmin: false,
   authenticated: false,
   accessToken: "",
@@ -56,6 +57,7 @@ export default (props: ContextProps): JSX.Element => {
     age: 0,
     address: "",
     valid_id_type: "",
+    valid_id_pic: "",
     isAdmin: false,
     authenticated: false,
     accessToken: "",
@@ -95,6 +97,7 @@ export default (props: ContextProps): JSX.Element => {
       birthday: user.birthday,
       age: user.age,
       valid_id_type: user.valid_id_type,
+      valid_id_pic: user.valid_id_pic,
       isAdmin: user.admin,
       authenticated: true,
       accessToken: token,
@@ -117,6 +120,7 @@ export default (props: ContextProps): JSX.Element => {
       age: 0,
       address: "",
       valid_id_type: "",
+      valid_id_pic: "",
       isAdmin: false,
       authenticated: false,
       accessToken: "",
@@ -138,6 +142,7 @@ export default (props: ContextProps): JSX.Element => {
         age: authentication.age,
         address: authentication.address,
         valid_id_type: authentication.valid_id_type,
+        valid_id_pic: authentication.valid_id_pic,
         isAdmin: authentication.isAdmin,
         authenticated: authentication.authenticated,
         accessToken: authentication.accessToken,

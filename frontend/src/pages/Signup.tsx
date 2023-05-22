@@ -5,12 +5,20 @@ import LoginLayout from "../layouts/Login";
 import * as Yup from "yup";
 import axios from "../axios";
 
+
 const schema = Yup.object().shape({
   first_name: Yup.string().min(2).required(),
   last_name: Yup.string().min(2).required(),
   sex: Yup.string().oneOf(["Male", "Female"]).required(),
   address: Yup.string().required(),
   valid_id_type: Yup.string().required("Required"),
+  valid_id_pic: Yup.mixed().test('fileType', 'Invalid file format', function (value) {
+    if (value && value instanceof File) {
+      const validFormats = ['image/jpeg', 'image/png', 'image/ico']; // Add more valid file formats if needed
+      return validFormats.includes(value.type);
+    }
+    return true; // Allow empty or non-File values
+  }),
   birthday: Yup.date().required(),
   age: Yup.number().min(18).required(),
   email: Yup.string().email("Invalid email").required("Required"),
@@ -42,6 +50,7 @@ const Signup = (): JSX.Element => {
               valid_id_type: "",
               password: "",
               confirm: "",
+              valid_id_pic: null,
             }}
             validationSchema={schema}
             onSubmit={({ first_name, last_name, sex, birthday, age, email, address, valid_id_type, password }) => {
@@ -142,14 +151,27 @@ const Signup = (): JSX.Element => {
                 </div>
 
                 <div className="input-container">
-                  <input
-                    id="valid_id_type"
-                    type="text"
-                    placeholder="Valid ID Type"
-                    {...getFieldProps("valid_id_type")}
+                <input
+                    id="valid_id_pic"
+                    type="file"
+                    onChange={(event) => {
+                      const file = event.target.files && event.target.files[0];
+                      getFieldProps("valid_id_pic").onChange(event);
+                      getFieldProps("valid_id_pic").onBlur(event);
+                      if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                          const result = e.target?.result;
+                          if (result) {
+                            // Perform any additional logic with the file data
+                          }
+                        };
+                        reader.readAsDataURL(file);
+                      }
+                    }}
                   />
                   <div className="form-error-text">
-                    {touched.valid_id_type && errors.valid_id_type ? errors.valid_id_type : null}
+                    {touched.valid_id_pic && errors.valid_id_pic ? errors.valid_id_pic : null}
                   </div>
                 </div>
 
