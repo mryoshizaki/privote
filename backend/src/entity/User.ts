@@ -40,6 +40,9 @@ export class User extends BaseEntity {
   @Column({ length: 255 })
   valid_id_type!: string;
 
+  @Column({ length: 255 })
+  valid_id_pic!: string;
+
   @Column({ type: "date" })
   birthday!: Date;
 

@@ -63,7 +63,7 @@ export default async (req: Request, res: Response) => {
     sex: user.sex,
     address: user.address,
     valid_id_type: user.valid_id_type,
-    // valid_id_pic: string;
+    valid_id_pic: user.valid_id_pic,
     birthday: user.birthday,
     age: user.age
   };

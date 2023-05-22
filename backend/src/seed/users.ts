@@ -1,3 +1,6 @@
+import fs from 'fs';
+import path from 'path';
+
 enum Sex {
   Male = "Male",
   Female = "Female",
@@ -13,9 +16,9 @@ type UserType = {
   sex: Sex;
   address: string;
   valid_id_type: string;
-  // valid_id_pic: string;
   birthday: Date;
   age: number;
+  valid_id_pic: string;
 };
 
 const users: UserType[] = [
@@ -29,7 +32,7 @@ const users: UserType[] = [
     sex: Sex.Male,
     address: "Manila PH",
     valid_id_type: "Postal ID",
-    // valid_id_pic: string;
+    valid_id_pic: "logo192.png",
     birthday: new Date(1990, 0, 1),
     age: 21
   },
@@ -43,7 +46,7 @@ const users: UserType[] = [
     sex: Sex.Female,
     address: "Tokyo JP",
     valid_id_type: "Birth certificate",
-    // valid_id_pic: string;
+    valid_id_pic: "logo192.png",
     birthday: new Date(1985, 1, 12),
     age: 23
   },
@@ -57,7 +60,7 @@ const users: UserType[] = [
     sex: Sex.Male,
     address: "California USA",
     valid_id_type: "Barangay ID",
-    // valid_id_pic: string;
+    valid_id_pic: "logo192.png",
     birthday: new Date(1990, 2, 2),
     age: 30
   },

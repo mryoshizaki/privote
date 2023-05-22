@@ -25,7 +25,6 @@ export default async (req: Request, res: Response) => {
     }
 
     const user: any = jwt.verify(refreshToken, refreshTokenSecret);
-
     const userPlainObj = {
       id: user.id,
       first_name: user.first_name,
@@ -35,7 +34,7 @@ export default async (req: Request, res: Response) => {
       sex: user.sex,
       address: user.address,
       valid_id_type: user.valid_id_type,
-      // valid_id_pic: string;
+      valid_id_pic: user.valid_id_pic,
       birthday: user.birthday,
       age: user.age
     };

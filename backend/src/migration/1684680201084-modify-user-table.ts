@@ -13,6 +13,7 @@ export class modifyUserTable1684680042496 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`user\` ADD \`sex\` enum ('Male', 'Female') NOT NULL`);
         await queryRunner.query(`ALTER TABLE \`user\` ADD \`address\` varchar(255) NOT NULL`);
         await queryRunner.query(`ALTER TABLE \`user\` ADD \`valid_id_type\` varchar(255) NOT NULL`);
+        await queryRunner.query(`ALTER TABLE \`user\` ADD \`valid_id_pic\` varchar(255) NOT NULL`);
         await queryRunner.query(`ALTER TABLE \`user\` ADD \`birthday\` date NOT NULL`);
         await queryRunner.query(`ALTER TABLE \`user\` ADD \`age\` int NOT NULL`);
     }
@@ -21,6 +22,7 @@ export class modifyUserTable1684680042496 implements MigrationInterface {
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`age\``);
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`birthday\``);
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`valid_id_type\``);
+        await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`valid_id_pic\``);
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`address\``);
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`sex\``);
         await queryRunner.query(`ALTER TABLE \`user\` DROP COLUMN \`last_name\``);
