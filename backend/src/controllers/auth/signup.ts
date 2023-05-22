@@ -12,6 +12,7 @@ const schema = yup.object({
     sex: yup.string().oneOf(["Male", "Female"]).required(),
     address: yup.string().required(),
     valid_id_type: yup.string().required(),
+    valid_id_pic: yup.string().required(),
     birthday: yup.date().required(),
     age: yup.number().min(18).required(),
   }),
@@ -42,6 +43,7 @@ export default async (req: Request, res: Response) => {
   newUser.sex = req.body.sex;
   newUser.address = req.body.address;
   newUser.valid_id_type = req.body.valid_id_type;
+  newUser.valid_id_pic = req.body.valid_id_pic;
   newUser.birthday = req.body.birthday;
   newUser.age = req.body.age;
 

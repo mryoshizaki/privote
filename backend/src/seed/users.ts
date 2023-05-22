@@ -32,7 +32,7 @@ const users: UserType[] = [
     sex: Sex.Male,
     address: "Manila PH",
     valid_id_type: "Postal ID",
-    valid_id_pic: "logo192.png",
+    valid_id_pic: "A324ASDVA",
     birthday: new Date(1990, 0, 1),
     age: 21
   },
@@ -46,7 +46,7 @@ const users: UserType[] = [
     sex: Sex.Female,
     address: "Tokyo JP",
     valid_id_type: "Birth certificate",
-    valid_id_pic: "logo192.png",
+    valid_id_pic: "nJKKLAS2D3VA",
     birthday: new Date(1985, 1, 12),
     age: 23
   },
@@ -60,7 +60,7 @@ const users: UserType[] = [
     sex: Sex.Male,
     address: "California USA",
     valid_id_type: "Barangay ID",
-    valid_id_pic: "logo192.png",
+    valid_id_pic: "567ASDASD",
     birthday: new Date(1990, 2, 2),
     age: 30
   },

@@ -4,21 +4,18 @@ import { Formik } from "formik";
 import LoginLayout from "../layouts/Login";
 import * as Yup from "yup";
 import axios from "../axios";
+import { App } from "./App";
+import { render } from 'react-dom';
 
-
+const rootElement = document.getElementById("root");
+// render(<App />, rootElement);
 const schema = Yup.object().shape({
   first_name: Yup.string().min(2).required(),
   last_name: Yup.string().min(2).required(),
   sex: Yup.string().oneOf(["Male", "Female"]).required(),
   address: Yup.string().required(),
   valid_id_type: Yup.string().required("Required"),
-  valid_id_pic: Yup.mixed().test('fileType', 'Invalid file format', function (value) {
-    if (value && value instanceof File) {
-      const validFormats = ['image/jpeg', 'image/png', 'image/ico']; // Add more valid file formats if needed
-      return validFormats.includes(value.type);
-    }
-    return true; // Allow empty or non-File values
-  }),
+  valid_id_pic: Yup.string().required("Required"),
   birthday: Yup.date().required(),
   age: Yup.number().min(18).required(),
   email: Yup.string().email("Invalid email").required("Required"),
@@ -48,12 +45,12 @@ const Signup = (): JSX.Element => {
               age: 0,
               address: "",
               valid_id_type: "",
+              valid_id_pic: "",
               password: "",
-              confirm: "",
-              valid_id_pic: null,
+              confirm: ""
             }}
             validationSchema={schema}
-            onSubmit={({ first_name, last_name, sex, birthday, age, email, address, valid_id_type, password }) => {
+            onSubmit={({ first_name, last_name, sex, birthday, age, email, address, valid_id_type, valid_id_pic, password }) => {
               axios
                 .post("/auth/signup", {
                   first_name,
@@ -63,6 +60,7 @@ const Signup = (): JSX.Element => {
                   age,
                   address,
                   valid_id_type,
+                  valid_id_pic,
                   email,
                   password,
                 })
@@ -79,6 +77,7 @@ const Signup = (): JSX.Element => {
             }}
           >
             {({ errors, touched, getFieldProps, handleSubmit }) => (
+
               <form onSubmit={handleSubmit}>
                 <div className="input-container">
                   <input
@@ -103,6 +102,19 @@ const Signup = (): JSX.Element => {
                     {touched.last_name && errors.last_name ? errors.last_name : null}
                   </div>
                 </div>
+
+                <div className="input-container">
+                  <input
+                    id="email"
+                    type="email"
+                    placeholder="Email"
+                    {...getFieldProps("email")}
+                  />
+                  <div className="form-error-text">
+                    {touched.email && errors.email ? errors.email : null}
+                  </div>
+                </div>
+
                 <div className="input-container">
                   <select
                     id="sex"
@@ -151,41 +163,28 @@ const Signup = (): JSX.Element => {
                 </div>
 
                 <div className="input-container">
-                <input
-                    id="valid_id_pic"
-                    type="file"
-                    onChange={(event) => {
-                      const file = event.target.files && event.target.files[0];
-                      getFieldProps("valid_id_pic").onChange(event);
-                      getFieldProps("valid_id_pic").onBlur(event);
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (e) => {
-                          const result = e.target?.result;
-                          if (result) {
-                            // Perform any additional logic with the file data
-                          }
-                        };
-                        reader.readAsDataURL(file);
-                      }
-                    }}
+                  <input
+                    id="valid_id_type"
+                    type="valid_id_type"
+                    placeholder="Valid ID Type"
+                    {...getFieldProps("valid_id_type")}
                   />
                   <div className="form-error-text">
-                    {touched.valid_id_pic && errors.valid_id_pic ? errors.valid_id_pic : null}
+                    {touched.valid_id_type && errors.valid_id_type ? errors.valid_id_type : null}
                   </div>
                 </div>
-
                 <div className="input-container">
                   <input
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    {...getFieldProps("email")}
+                    id="valid_id_pic"
+                    type="valid_id_pic"
+                    placeholder="Valid ID Number"
+                    {...getFieldProps("valid_id_pic")}
                   />
                   <div className="form-error-text">
-                    {touched.email && errors.email ? errors.email : null}
+                    {touched.valid_id_pic && errors.valid_id_pic ? errors.valid_id_type : null}
                   </div>
                 </div>
+                
 
                 <div className="input-container">
                   <input
