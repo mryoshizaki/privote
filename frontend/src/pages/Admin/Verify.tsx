@@ -3,7 +3,7 @@ import { useParams } from "react-router";
 import axios from "../../axios";
 
 const Verify = () => {
-  const { id, name } = useParams();
+  const { id, first_name, last_name } = useParams();
 
   const verifyUser = () => {
     axios
@@ -23,11 +23,11 @@ const Verify = () => {
     <div>
       
       <button onClick={verifyUser} className="button-primary">
-        verify {name}
+        verify {first_name}
       </button>
 
       <button onClick={deleteUser} className="button-black">
-        delete {name}
+        delete {first_name}
       </button>
     </div>
   );

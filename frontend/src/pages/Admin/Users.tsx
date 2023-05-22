@@ -8,7 +8,6 @@ enum Sex {
 
 type User = {
   id: number;
-  name: string;
   email: string;
   first_name: string;
   last_name: string;
@@ -65,8 +64,19 @@ const Users = () => {
     <div className="users-wrapper">
       {users.map((user, index) => (
         <div key={index} className="user-wrapper">
-          {user.name}
-
+          Name: {user.first_name} {user.last_name}
+          <br/>
+          Email: {user.email}
+          <br/>
+          Sex: {user.sex}
+          <br/>
+          Birthday: {user.birthday}
+          <br/>
+          Age: {user.age}
+          <br/>
+          Address: {user.address}
+          <br/>
+          Valid ID Type: {user.valid_id_type}
           <div>
             <button
               onClick={() => verifyUser(user.id)}

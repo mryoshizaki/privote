@@ -7,12 +7,12 @@ import axios from "../axios";
 
 const schema = Yup.object().shape({
   first_name: Yup.string().min(2).required(),
-    last_name: Yup.string().min(2).required(),
-    sex: Yup.string().oneOf(["Male", "Female"]).required(),
-    address: Yup.string().required(),
-    valid_id_type: Yup.string().required(),
-    birthday: Yup.date().required(),
-    age: Yup.number().min(18).required(),
+  last_name: Yup.string().min(2).required(),
+  sex: Yup.string().oneOf(["Male", "Female"]).required(),
+  address: Yup.string().required(),
+  valid_id_type: Yup.string().required("Required"),
+  birthday: Yup.date().required(),
+  age: Yup.number().min(18).required(),
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string().min(3).required("Required"),
   confirm: Yup.string()
@@ -32,16 +32,28 @@ const Signup = (): JSX.Element => {
         <div className="form-container">
           <Formik
             initialValues={{
-              name: "",
+              first_name: "",
+              last_name: "",
               email: "",
+              sex: "",
+              birthday: new Date(),
+              age: 0,
+              address: "",
+              valid_id_type: "",
               password: "",
               confirm: "",
             }}
             validationSchema={schema}
-            onSubmit={({ name, email, password }) => {
+            onSubmit={({ first_name, last_name, sex, birthday, age, email, address, valid_id_type, password }) => {
               axios
                 .post("/auth/signup", {
-                  name,
+                  first_name,
+                  last_name,
+                  sex,
+                  birthday,
+                  age,
+                  address,
+                  valid_id_type,
                   email,
                   password,
                 })
@@ -61,13 +73,83 @@ const Signup = (): JSX.Element => {
               <form onSubmit={handleSubmit}>
                 <div className="input-container">
                   <input
-                    id="name"
+                    id="first_name"
                     type="text"
-                    placeholder="Name"
-                    {...getFieldProps("name")}
+                    placeholder="First Name"
+                    {...getFieldProps("first_name")}
                   />
                   <div className="form-error-text">
-                    {touched.name && errors.name ? errors.name : null}
+                    {touched.first_name && errors.first_name ? errors.first_name : null}
+                  </div>
+                </div>
+
+                <div className="input-container">
+                  <input
+                    id="last_name"
+                    type="text"
+                    placeholder="Last Name"
+                    {...getFieldProps("last_name")}
+                  />
+                  <div className="form-error-text">
+                    {touched.last_name && errors.last_name ? errors.last_name : null}
+                  </div>
+                </div>
+                <div className="input-container">
+                  <select
+                    id="sex"
+                    {...getFieldProps("sex")}
+                  >
+                    <option value="">Select Sex</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <div className="form-error-text">
+                    {touched.sex && errors.sex ? errors.sex : null}
+                  </div>
+                </div>
+                <div className="input-container">
+                  <input
+                    id="birthday"
+                    type="date"
+                    placeholder="Birthday"
+                    {...getFieldProps("birthday")}
+                  />
+                  <div className="form-error-text">
+                    {touched.birthday && errors.birthday ? errors.birthday : null}
+                  </div>
+                </div>
+                <div className="input-container">
+                  <input
+                    id="age"
+                    type="number"
+                    placeholder="Age"
+                    {...getFieldProps("age")}
+                  />
+                  <div className="form-error-text">
+                    {touched.age && errors.age ? errors.age : null}
+                  </div>
+                </div>
+                <div className="input-container">
+                  <input
+                    id="address"
+                    type="text"
+                    placeholder="Address"
+                    {...getFieldProps("address")}
+                  />
+                  <div className="form-error-text">
+                    {touched.address && errors.address ? errors.address : null}
+                  </div>
+                </div>
+
+                <div className="input-container">
+                  <input
+                    id="valid_id_type"
+                    type="text"
+                    placeholder="Valid ID Type"
+                    {...getFieldProps("valid_id_type")}
+                  />
+                  <div className="form-error-text">
+                    {touched.valid_id_type && errors.valid_id_type ? errors.valid_id_type : null}
                   </div>
                 </div>
 
