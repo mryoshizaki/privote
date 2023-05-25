@@ -7,6 +7,7 @@ import View from "../pages/View";
 import { AuthContext } from "../contexts/Auth";
 import UserPollsPage from "../pages/User/Polls";
 import HomePage from "../pages/Admin/Home";
+import VoterListPage from "../pages/Admin/VoterList";
 import ProfilePage from "../pages/User/Profile";
 import Default from "../layouts/Default";
 import AdminUsersPage from "../pages/Admin/Users";
@@ -24,6 +25,7 @@ export default () => {
       const adminMenu = [
         { name: "Home", link: "/" },
         { name: "Verify Users", link: "/users" },
+        { name: "List of voters", link: "/voter-list" },
         { name: "Profile", link: "/profile" },
       ];
 
@@ -39,6 +41,7 @@ export default () => {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/users" element={<AdminUsersPage />} />
+              <Route path="/voter-list" element={<VoterListPage />} />
               <Route path="/verify/:name/:id" element={<AdminVerifyPage />} />
               <Route path="/profile" element={<ProfilePage />} />
             </Routes>

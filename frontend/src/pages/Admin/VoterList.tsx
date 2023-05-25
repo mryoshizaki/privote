@@ -24,44 +24,18 @@ const Users = () => {
 
   useEffect(() => {
     axios
-      .get("/users/all")
+      .get("/users/voter-list")
       .then((res) => setUser(res.data.users))
       .catch((error) => console.log({ error }));
   }, []);
 
-  const verifyUser = (id: number | string) => {
-    axios
-      .post("/users/verify", { userId: id })
-      .then((res) => {
-        console.log(res);
-        removeUserFromList(id);
-      })
-      .catch((error) => console.log({ error }));
-  };
-
-  const deleteUser = (id: number | string) => {
-    axios
-      .delete(`/users/delete/${id}`)
-      .then((res) => {
-        console.log(res);
-        removeUserFromList(id);
-      })
-      .catch((error) => console.log({ error }));
-  };
-
-  const removeUserFromList = (id: number | string) => {
-    const index = users.findIndex((user) => user.id === id);
-    const newList = [...users];
-    newList.splice(index, 1);
-    setUser(newList);
-  };
-
   if (users.length === 0) return <div>
-    No users to verify.
+    No verified voters.
   </div>;
 
   return (
     <div className="users-wrapper">
+      <span className="title-small">Voter List</span>
       {users.map((user, index) => (
         <div key={index} className="user-wrapper">
           Name: {user.first_name} {user.last_name}
@@ -79,21 +53,6 @@ const Users = () => {
           Valid ID Type: {user.valid_id_type}
           <br/>
           Valid ID Number: {user.valid_id_pic}
-          <div>
-            <button
-              onClick={() => verifyUser(user.id)}
-              className="button-primary"
-            >
-              verify
-            </button>
-
-            <button
-              onClick={() => deleteUser(user.id)}
-              className="button-black"
-            >
-              delete
-            </button>
-          </div>
         </div>
       ))}
     </div>
