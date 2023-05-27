@@ -9,7 +9,7 @@ const schema = yup.object({
     candidates: yup.array(
       yup.object({
         name: yup.string().min(3),
-        info: yup.string().min(10),
+        info: yup.string(),
       })
     ),
   }),

@@ -21,7 +21,17 @@ const Start = () => {
   const [info, setInfo] = useState<string>("");
 
   const candidateField = useRef<HTMLInputElement>(null);
-  const candidateInfoField = useRef<HTMLInputElement>(null);
+  const candidateInfoField = useRef<HTMLSelectElement>(null);
+
+  const handleAddCandidate = () => {
+    const newCandidate: Candidate = {
+      name,
+      info,
+    };
+    setCandidates([...candidates, newCandidate]);
+    setName("");
+    setInfo("");
+  };
 
   return (
     <div className="form-container">
@@ -129,22 +139,14 @@ const Start = () => {
                   type="text"
                   placeholder="Add Candidate"
                   ref={candidateField}
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                 />
 
                 <button
                   className=""
                   type="button"
-                  onClick={() => {
-                    const newCandidate = { name, info };
-                    setCandidates([...candidates, newCandidate]);
-                    if (candidateField.current)
-                      candidateField.current.value = "";
-                    if (candidateInfoField.current)
-                      candidateInfoField.current.value = "";
-                  }}
+                  onClick={handleAddCandidate}
                 >
                   Add
                 </button>
@@ -153,14 +155,19 @@ const Start = () => {
 
             <div className="input-container">
               <div className="add-candidate-wrapper">
-                <input
-                  type="text"
-                  placeholder="Candidate Info"
+                <select
+                  value={info}
+                  onChange={(e) => setInfo(e.target.value)}
                   ref={candidateInfoField}
-                  onChange={(e) => {
-                    setInfo(e.target.value);
-                  }}
-                />
+                >
+                  <option value="">Select a position</option>
+                  <option value="Chairperson, Sangguniang Kabataan">
+                    Chairperson, Sangguniang Kabataan
+                  </option>
+                  <option value="Member, Sangguniang Kabataan">
+                    Member, Sangguniang Kabataan
+                  </option>
+                </select>
               </div>
             </div>
 
