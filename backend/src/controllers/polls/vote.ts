@@ -17,12 +17,23 @@ export const checkVoteability = async (req: Request, res: Response) => {
   }
 
   const instance = await ElectionContract.deployed();
-  const voters: Array<any> = await instance.getVoters();
+  const chairpersonVoters: Array<any> = await instance.getChairpersonVoters();
+  const memberVoters: Array<any> = await instance.getMemberVoters();
   const status: "not-started" | "running" | "finished" =
     await instance.getStatus();
-
   if (status !== "running") return res.status(400).send("election not running");
-  if (voters.includes(req.body.id)) return res.send("already-voted");
+  
+  
+  const chairpersonCount = chairpersonVoters.filter((id) => id === req.body.id).length;
+  const memberCount = memberVoters.filter((id) => id === req.body.id).length;
+
+  if (chairpersonCount >= 1) {
+    return res.send("already-voted");
+  }
+
+    if (memberCount >= 7) {
+    return res.send("already-voted");
+  }
 
   return res.send("not-voted");
 };
@@ -45,9 +56,10 @@ export default async (req: Request, res: Response) => {
   const accounts = await web3.eth.getAccounts();
   const instance = await ElectionContract.deployed();
   const voters: Array<any> = await instance.getVoters();
+  const chairpersonVoters: Array<any> = await instance.getChairpersonVoters();
   const candidates: Array<any> = await instance.getCandidates();
 
-  if (voters.includes(req.body.id))
+  if (chairpersonVoters.includes(req.body.id))
     return res.status(400).send("already voted");
 
   if (!candidates.includes(req.body.candidate))

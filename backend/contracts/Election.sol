@@ -51,6 +51,13 @@ contract Election {
         return candidateNames;
     }
 
+    function getCandidateInfo(string memory _candidateName) public view returns (string memory) {
+    require(candidates[_candidateName].exists, "No such candidate");
+
+    return candidates[_candidateName].info;
+}
+
+
     /*****************************CANDIDATES SECTION*****************************/
 
     /*****************************ELECTION SECTION*****************************/
@@ -90,6 +97,8 @@ contract Election {
     Vote[] votes;
     mapping(string => bool) public voterIds;
     string[] votersArray;
+    string[] chairpersonArray;
+    string[] memberArray;
 
     function vote(
         string memory _voterId,
@@ -98,7 +107,7 @@ contract Election {
     ) public {
         require(started == true && ended == false);
         require(candidates[_candidateName].exists, "No such candidate");
-        require(!voterIds[_voterId], "Already Voted");
+        // require(!voterIds[_voterId], "Already Voted");
 
         Vote memory newVote = Vote({
             voterAddress: msg.sender,
@@ -110,10 +119,24 @@ contract Election {
         votes.push(newVote);
         voterIds[_voterId] = true;
         votersArray.push(_voterId);
+
+        if (keccak256(abi.encodePacked(getCandidateInfo(_candidateName))) == keccak256(abi.encodePacked("Chairperson, Sangguniang Kabataan"))) {
+        chairpersonArray.push(_voterId);
+        } else if (keccak256(abi.encodePacked(getCandidateInfo(_candidateName))) == keccak256(abi.encodePacked("Member, Sangguniang Kabataan"))) {
+            memberArray.push(_voterId);
+        }
     }
 
     function getVoters() public view returns (string[] memory) {
         return votersArray;
+    }
+
+    function getChairpersonVoters() public view returns (string[] memory) {
+        return chairpersonArray;
+    }
+
+    function getMemberVoters() public view returns (string[] memory) {
+        return memberArray;
     }
 
     /*****************************VOTER SECTION*****************************/

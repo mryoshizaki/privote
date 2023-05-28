@@ -1,5 +1,5 @@
-import React from "react";
 import axios from "../../axios";
+import React, { useEffect, useState } from "react";
 
 interface ChartProps {
   votes: any;
@@ -10,6 +10,18 @@ interface ChartProps {
 
 const Chart = (props: ChartProps) => {
   const votes = props.votes;
+  const [status, setStatus] = useState<"not-started" | "running" | "finished">(
+    "not-started"
+  );
+
+  useEffect(() => {
+    axios
+      .get("/polls/status")
+      .then((res) => {
+        setStatus(res.data.status);
+      })
+      .catch((error) => console.log({ error }));
+  }, []);
 
   const getButtons = () => {
     const names = [];
@@ -21,7 +33,7 @@ const Chart = (props: ChartProps) => {
           name: props.userName,
           candidate,
         })
-        .then((_) => window.location.reload())
+        .then(() => window.location.reload())
         .catch((err) => console.log({ err }));
     };
 
@@ -74,7 +86,7 @@ const Chart = (props: ChartProps) => {
         <div key={name} className="bar-wrapper">
           <div
             style={{
-              height: count != 0 ? `${(count * 100) / total}%` : "auto",
+              height: count !== 0 ? `${(count * 100) / total}%` : "auto",
               border: "2px solid #4daaa7",
               display: "flex",
               flexDirection: "column",
@@ -97,7 +109,9 @@ const Chart = (props: ChartProps) => {
 
   return (
     <div>
-      <div className="bars-container">{getBars()}</div>
+      {status === "finished" && (
+        <div className="bars-container">{getBars()}</div>
+      )}
       <div className="names-wrapper">{getNames()}</div>
 
       {props.enableVote ? (
