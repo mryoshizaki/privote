@@ -13,6 +13,7 @@ const Chart = (props: ChartProps) => {
   const [status, setStatus] = useState<"not-started" | "running" | "finished">(
     "not-started"
   );
+  const [votedCandidates, setVotedCandidates] = useState<string[]>([]);
 
   useEffect(() => {
     axios
@@ -21,30 +22,53 @@ const Chart = (props: ChartProps) => {
         setStatus(res.data.status);
       })
       .catch((error) => console.log({ error }));
+
+    // Retrieve previously voted candidates from localStorage
+    const storedCandidates = localStorage.getItem("votedCandidates");
+    if (storedCandidates) {
+      setVotedCandidates(JSON.parse(storedCandidates));
+    }
   }, []);
+
+  const vote = (candidate: string) => {
+    axios
+      .post("/polls/vote", {
+        id: props.userId?.toString(),
+        name: props.userName,
+        candidate,
+      })
+      .then(() => {
+        // Show success popup message
+        alert(`You voted for ${candidate}!`);
+        // Update voted candidates in state
+        setVotedCandidates([...votedCandidates, candidate]);
+        // Store voted candidates in localStorage
+        localStorage.setItem(
+          "votedCandidates",
+          JSON.stringify([...votedCandidates, candidate])
+        );
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log({ err });
+      });
+  };
 
   const getButtons = () => {
     const names = [];
 
-    const vote = (candidate: string) => {
-      axios
-        .post("/polls/vote", {
-          id: props.userId?.toString(),
-          name: props.userName,
-          candidate,
-        })
-        .then(() => window.location.reload())
-        .catch((err) => console.log({ err }));
-    };
-
     for (const name in votes) {
+      // Check if the candidate has been voted by the user
+      const isVoted = votedCandidates.includes(name);
+
       names.push(
         <button
           onClick={() => vote(name)}
           key={name}
-          className="button-wrapper text-normal"
+          className={`button-wrapper text-normal ${isVoted ? "voted" : ""}`}
+          disabled={isVoted} // Disable the button if already voted
         >
-          vote
+          {isVoted ? "Voted" : "Vote"}
         </button>
       );
     }
