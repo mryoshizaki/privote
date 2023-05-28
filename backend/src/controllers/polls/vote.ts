@@ -21,6 +21,7 @@ export const checkVoteability = async (req: Request, res: Response) => {
   const memberVoters: Array<any> = await instance.getMemberVoters();
   const status: "not-started" | "running" | "finished" =
     await instance.getStatus();
+
   if (status !== "running") return res.status(400).send("election not running");
   
   
